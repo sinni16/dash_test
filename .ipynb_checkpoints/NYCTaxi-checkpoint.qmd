@@ -32,31 +32,31 @@ df = pd.read_csv("https://raw.githubusercontent.com/guebin/DV2023/main/posts/NYC
 )
 df_small = df[::100].reset_index(drop=True)
 
-tidydata1 = df_feature.pivot_table(
+tidydata1 = df.pivot_table(
     index = 'pickup_hour',
     columns = 'dayofweek',
     values = 'speed',
     aggfunc = 'mean'
 ).stack().reset_index().rename({0:'speed_mean'},axis=1)
 
-# fig1 = px.density_heatmap(
+fig1 = px.density_heatmap(
     data_frame=tidydata1,
     x='pickup_hour',
     y='dayofweek',
     z='speed_mean',
     nbinsx=24,
     nbinsy=7,
-    height=300
+    height=300 
 )
 
-tidydata2 = df_feature.pivot_table(
+tidydata2 = df.pivot_table(
     index = 'pickup_hour',
     columns = 'dayofweek',
     values = 'dist',
     aggfunc = 'mean'
-).stack().reset_index().rename({0:'speed_mean'},axis=1)
+).stack().reset_index().rename({0:'dist_mean'},axis=1)
 
-# fig2 = px.density_heatmap(
+fig2 = px.density_heatmap(
     data_frame=tidydata2,
     x='pickup_hour',
     y='dayofweek',
@@ -79,8 +79,8 @@ tidydata3 = df_feature_small.assign(
     speed_cut = pd.qcut(df_feature_small.speed,4,labels=['매우느림','조금느림','조금빠름','매우빠름'])
 ).sort_values('speed_cut')
 
-# fig3 = px.line_mapbox(
-    data_frame=tidydata,
+fig3 = px.line_mapbox(
+    data_frame=tidydata3,
     lat = 'latitude',
     lon = 'longitude',
     line_group = 'id',
@@ -91,8 +91,9 @@ tidydata3 = df_feature_small.assign(
     zoom=11
 
 )
+
 scatter_data = px.scatter_mapbox(
-    data_frame=tidydata,
+    data_frame=tidydata3,
     lat = 'latitude',
     lon = 'longitude',
     size = 'passenger_count',
@@ -110,6 +111,7 @@ fig3.update_traces(
     },
     opacity=0.8
 )
+
 ```
 # 기말고사1-(1),(2)
 
