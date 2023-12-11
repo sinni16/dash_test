@@ -4,9 +4,9 @@ author: "김시은"
 format: dashboard
 execute: 
   enabled: true
-  cache: false
+  cache: falses
   freeze: false
-  error: true
+  error: trues
 ---
 
 ```{python}
@@ -93,7 +93,6 @@ fig3 = px.line_mapbox(
     zoom=11
 
 )
-
 scatter_data = px.scatter_mapbox(
     data_frame=tidydata3,
     lat = 'latitude',
@@ -105,14 +104,7 @@ scatter_data = px.scatter_mapbox(
     mapbox_style = 'carto-positron',
     zoom=11
 ).data 
-for sd in scatter_data: 
-    fig3.add_trace(sd)
-fig3.update_traces(
-    line={
-        'width':1
-    },
-    opacity=0.8
-)
+
 
 ```
 # 기말고사1-(1),(2)
@@ -135,5 +127,13 @@ fig2.show()
 
 ```{python}
 #| title: 속력별 경로 시각화
+for sd in scatter_data: 
+    fig3.add_trace(sd)
+fig3.update_traces(
+    line={
+        'width':1
+    },
+    opacity=0.8
+)
 fig3.show()
 ```
