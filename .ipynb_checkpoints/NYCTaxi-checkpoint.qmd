@@ -4,9 +4,9 @@ author: "김시은"
 format: dashboard
 execute: 
   enabled: true
-  cache: falses
+  cache: false
   freeze: false
-  error: trues
+  error: true
 ---
 
 ```{python}
@@ -105,8 +105,8 @@ scatter_data = px.scatter_mapbox(
     zoom=11
 ).data 
 
-
 ```
+
 # 기말고사1-(1),(2)
 
 ## Row {height=50%}
