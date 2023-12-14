@@ -30,7 +30,7 @@ df = pd.read_csv("https://raw.githubusercontent.com/guebin/DV2023/main/posts/NYC
     speed = lambda df: df.dist / df.trip_duration,
     pickup_hour = lambda df: df.pickup_datetime.dt.hour,
     dropoff_hour = lambda df: df.dropoff_datetime.dt.hour,
-    dayofweek = lambda df: df.pickup_datetime.dt.dayofweek.map({0:'월',1:'화',2:'수',3:'목',4:'금',5:'토',6:'일'})
+    dayofweek = lambda df: df.pickup_datetime.dt.dayofweek
 )
 df_small = df[::100].reset_index(drop=True)
 
@@ -39,7 +39,9 @@ tidydata1 = df.pivot_table(
     columns = 'dayofweek',
     values = 'speed',
     aggfunc = 'mean'
-).stack().reset_index().rename({0:'speed_mean'},axis=1)
+).stack().reset_index().rename({0:'speed_mean'},axis=1)\
+.assign(dayofweek = lambda df: df.dayofweek.sort_values().map({0:'월',1:'화',2:'수',3:'목',4:'금',5:'토',6:'일'}))
+
 
 fig1 = px.density_heatmap(
     data_frame=tidydata1,
@@ -56,7 +58,8 @@ tidydata2 = df.pivot_table(
     columns = 'dayofweek',
     values = 'dist',
     aggfunc = 'mean'
-).stack().reset_index().rename({0:'dist_mean'},axis=1)
+).stack().reset_index().rename({0:'dist_mean'},axis=1)\
+.assign(dayofweek = lambda df: df.dayofweek.sort_values().map({0:'월',1:'화',2:'수',3:'목',4:'금',5:'토',6:'일'}))
 
 fig2 = px.density_heatmap(
     data_frame=tidydata2,
