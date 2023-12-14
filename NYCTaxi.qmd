@@ -69,7 +69,7 @@ fig2 = px.density_heatmap(
     nbinsx=24,
     nbinsy=7,
     height=300
-)
+).update_layout(xaxis_title="pickup 시간", yaxis_title="요일", coloraxis_colorbar=dict(title="평균이동거리"))
 
 pcol = ['pickup_datetime', 'pickup_longitude', 'pickup_latitude', 'pickup_hour']
 dcol = ['dropoff_datetime', 'dropoff_longitude', 'dropoff_latitude', 'dropoff_hour']
@@ -95,7 +95,10 @@ fig3 = px.line_mapbox(
     mapbox_style = 'carto-positron',
     zoom=11
 
-)
+).update_layout(legend_title_text='평균속력').update_traces(
+    line={'width':1},
+    opacity=0.8)
+
 scatter_data = px.scatter_mapbox(
     data_frame=tidydata3,
     lat = 'latitude',
@@ -107,8 +110,10 @@ scatter_data = px.scatter_mapbox(
     mapbox_style = 'carto-positron',
     zoom=11
 ).data 
+
 for sd in scatter_data: 
     fig3.add_trace(sd)
+
 
 ```
 
@@ -125,13 +130,12 @@ fig1.show()
 
 ```{python}
 #| title: 요일,시간에 따른 평균이동거리 시각화        
-fig2.update_layout(xaxis_title="pickup 시간", yaxis_title="요일", coloraxis_colorbar=dict(title="평균이동거리")))
+fig2.show()
 ```
 
 # 기말고사1-(3)
 
 ```{python}
 #| title: 속력별 경로 시각화
-fig3.update_layout(
-    legend_title_text='평균속력')
+fig3.show()
 ```
