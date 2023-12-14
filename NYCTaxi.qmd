@@ -1,6 +1,6 @@
 ---
 title: "NYCTaxi"
-author: "김시은"
+author: "김시은(202016046)"
 format: dashboard
 execute: 
   enabled: true
@@ -30,8 +30,7 @@ df = pd.read_csv("https://raw.githubusercontent.com/guebin/DV2023/main/posts/NYC
     speed = lambda df: df.dist / df.trip_duration,
     pickup_hour = lambda df: df.pickup_datetime.dt.hour,
     dropoff_hour = lambda df: df.dropoff_datetime.dt.hour,
-    dayofweek = lambda df: df.pickup_datetime.dt.dayofweek
-)
+    dayofweek = lambda df: df.pickup_datetime.dt.dayofweek)
 df_small = df[::100].reset_index(drop=True)
 
 tidydata1 = df.pivot_table(
@@ -94,10 +93,7 @@ fig3 = px.line_mapbox(
     #---#
     mapbox_style = 'carto-positron',
     zoom=11
-
-).update_layout(legend_title_text='평균속력').update_traces(
-    line={'width':1},
-    opacity=0.8)
+).update_layout(legend_title_text='평균속력')
 
 scatter_data = px.scatter_mapbox(
     data_frame=tidydata3,
@@ -137,5 +133,7 @@ fig2.show()
 
 ```{python}
 #| title: 속력별 경로 시각화
-fig3.show()
+fig3.update_traces(
+    line={'width':1},
+    opacity=0.8).show()
 ```
